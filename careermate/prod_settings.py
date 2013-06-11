@@ -1,3 +1,5 @@
+from django.conf.settings import DATABASES
+
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 AWS_ACCESS_KEY_ID = 'AKIAIJDUTOXXAX2HWNBA'
