@@ -1,7 +1,7 @@
 <div class="home_page_text">
   <h3> Hello 
     {% if user.is_authenticated %}
-        {{ user.first_name }}
+        {{ user }}
     {% else %}
         {{ '!' }}
     {% endif %}

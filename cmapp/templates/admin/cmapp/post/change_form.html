@@ -1,0 +1,30 @@
+{% extends "home.html" %}
+{% load i18n admin_static admin_modify %}
+{% load admin_urls %}
+{% block content %}<div id="content-main">
+
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+
+{% if errors %}
+    <p class="errornote">
+     Please correct the errors below.
+    </p>
+    {{ form.non_field_errors }}
+{% endif %}
+
+
+{% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
+
+{% if adminform.first_field and add %}
+   <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>
+{% endif %}
+
+{# JavaScript for prepopulated fields #}
+{% prepopulated_fields_js %}
+
+</div>
+</form></div>
+{% endblock %}
+
+

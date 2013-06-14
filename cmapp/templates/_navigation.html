@@ -1,8 +1,16 @@
 <nav id="navbar">
 <ul>
-<li> <a herf="#"> Home </a> </li>
-<li> <a herf="#"> View Review </a> </li>
-<li> <a herf="#"> Submit Review </a> </li>
-<li> <a herf="#"> Logout </a> </li>
+<li> <a href="{% url 'home' %}"> Home </a> </li>
+<li> <a href="#"> View Review </a> </li>
+<li> <a href="#"> Submit Review </a> </li>
+{% if user.is_authenticated %}
+<li> <a href="{% url 'logout' %}"> Logout </a> </li>
+{% else %}
+<li> <a href="{% url 'login' %}"> Login </a> </li>
+{% endif %}
+{% if user.is_superuser %}
+<li> <a href="{% url 'admin:index' %}"> Admin </a> </li>
+{% endif %}
+
 </ul>
 </nav>
