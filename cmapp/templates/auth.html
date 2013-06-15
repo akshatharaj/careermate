@@ -1,5 +1,6 @@
 {% extends "home.html" %}
 {% block content %}
+<div id="auth_form">
 	{{ state }}
 	<form action="/login/" method="post">{% csrf_token %}
                 {% csrf_token %}
@@ -13,4 +14,5 @@
 
 		<input type="submit" value="Log In" />
 	</form>
+</div>
 {% endblock %}

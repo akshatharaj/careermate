@@ -1,16 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-REVIEW_TYPE_CHOICES = [
-    ('Job Interview', u'Job Interview'),
-    ('Employer/Company', u'Employer/Company'),
-]
-
-OVERALL_EXPERIENCE_CHOICES = [
-    ('Overall Negative', u'Overall Negative'),
-    ('Overall Neutral', u'Overall Neutral'),
-    ('Overall Positive', u'Overall Positive'),
-]
+from constants import REVIEW_TYPE_CHOICES, OVERALL_EXPERIENCE_CHOICES
 
 class Post(models.Model):
     author = models.ForeignKey(User)
@@ -24,4 +15,10 @@ class Post(models.Model):
     overall_experience = models.CharField(max_length=50, blank=True, null=True, 
                                           choices=OVERALL_EXPERIENCE_CHOICES)
     comments = models.TextField()
+    is_live = models.BooleanField(default=True)
 
+class PostReport(models.Model):
+    author = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    created = models.DateTimeField(auto_now=True)
+    reason = models.TextField()

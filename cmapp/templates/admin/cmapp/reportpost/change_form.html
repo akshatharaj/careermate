@@ -4,7 +4,7 @@
 {% block content %}<div id="content-main">
 
 {% autoescape off %}
-<div class="suggest_text">
+<div class="report_suggest_text">
 {% if suggest_text %}
 {{ suggest_text }}
 {% endif %}
@@ -13,7 +13,7 @@
 
 <form action="add" method="post">{% csrf_token %}
 <div>
-<h1 id="add_review_heading"> Add New Review </h1>
+<h1 id="report_review_heading">  </h1>
 {% if errors %}
     <p class="errornote">
      Please correct the errors below.
@@ -23,7 +23,7 @@
 
 <div class="form_content">
 {{ form.as_p }}
-<input type="submit" value="Submit" />
+<input type="submit" value="Report" />
 </div>
 {% if adminform.first_field and add %}
    <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>
