@@ -22,3 +22,10 @@ class PostReport(models.Model):
     post = models.ForeignKey(Post)
     created = models.DateTimeField(auto_now=True)
     reason = models.TextField()
+
+
+class PostResponse(models.Model):
+    author = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    created = models.DateTimeField(auto_now=True)
+    comments = models.TextField()

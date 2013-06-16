@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django import forms as django_forms
 from django.db.models import Q
 
-from forms import PostForm, PostReportForm
+from forms import PostForm, PostReportForm, PostSearchForm
 from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION
 from models import Post
 
@@ -68,14 +68,15 @@ def add_new_post(request):
 
 def list_posts(request):
     if request.method == 'GET':
+        search_form = PostSearchForm()
         posts = Post.objects.filter(is_live=True)
         if request.GET.get('q', None):
             posts = posts.filter(Q(job_title__icontains=q) |
                                  Q(city__icontains=q) |
                                  Q(company__icontains=q))
         posts = posts.order_by('created')
-        return render_to_response('admin/cmapp/post/list.html', {'posts': posts},
-                                   RequestContext(request))
+        return render_to_response('admin/cmapp/post/list.html', {'posts': posts,
+                                   'search_form': search_form}, RequestContext(request))
 
 def report_post(request, **kwargs):
     post_id = kwargs.get('post_id')

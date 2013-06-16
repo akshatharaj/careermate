@@ -9,6 +9,12 @@ OVERALL_EXPERIENCE_CHOICES = [
     ('Overall Positive', u'Overall Positive'),
 ]
 
+SEARCH_BY_CHOICES = [
+    (u'city', u'City'),
+    (u'job_title', u'Job Title'),
+    (u'company', u'Company'),
+]
+
 POST_ADD_SUGGESTION = """<p>Here are some tips to adding a helpful review</p>
 <ul>
 <li>Please be specific and try to keep it helpful for other members.</li>
@@ -20,4 +26,4 @@ of working for the employer</li>"""
 
 REPORT_POST_SUGGESTION = """ Please submit your response. The administrators will review it. 
 Please note that the post will remain online until the administrators review your report and 
-make a decision on it."""
+make a decision on it. You will receive an email when a decision is made."""

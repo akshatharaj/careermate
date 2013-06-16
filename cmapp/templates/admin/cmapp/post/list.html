@@ -39,6 +39,12 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
+  <div id="post_filter">
+  <h4>Filter results</h4> 
+  {{ search_form.as_p }}
+  <input type='submit' value='Filter'> </input>
+  </div>
+
   <div id="post_listing">
     {% for post in posts %}
     <h1> {{ post.job_title }} at {{ post.company }} </h1>

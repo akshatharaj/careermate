@@ -166,3 +166,34 @@ input[type=password]{
   padding-left: 15px;
 }
 
+#post_filter h4{
+  padding: 15px 0px 0px 15px;
+  color: #104F72;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#post_filter label{
+  display: none;
+}
+
+#post_filter input[type=text]{
+  border-radius: 20px;
+  margin-left: 10px;
+  width: 150px;
+  font-size: 12px;
+  line-height: 18px;
+  float: left;
+}
+
+#post_filter select{
+  width: 150px;
+  font-size: 22px;
+  margin-left: 15px;
+  float: left;
+}
+
+#post_filter input[type=submit]{
+  margin-left: 10px;
+  font-size: 2em;
+}
