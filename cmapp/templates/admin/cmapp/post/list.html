@@ -53,6 +53,7 @@
     <p> {{ post.comments|linebreaks }} </p>
     <p> {{ post.overall_experience }} experience </p>
     <a href="{% url 'report-post' post_id=post.id %}"> Report this Review </a>
+    <a href="{% url 'respond-post' post_id=post.id %}"> Submit a response </a>
     <hr/>
     {% endfor %}
 

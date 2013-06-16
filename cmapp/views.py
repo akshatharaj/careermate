@@ -97,5 +97,3 @@ def report_post(request, **kwargs):
         post_data['post'] = post.id
         post = form.save()
         return redirect('home')
-        return render_to_response('admin/cmapp/post/list.html', {'posts': posts},
-                                   RequestContext(request))
