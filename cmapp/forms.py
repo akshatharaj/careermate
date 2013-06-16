@@ -14,7 +14,7 @@ class PostSearchForm(forms.Form):
 
 class PostReportForm(ModelForm):
     class Meta:
-        model = PostReport
+        model = PostReport    
 
 class PostResponseForm(ModelForm):
     class Meta:

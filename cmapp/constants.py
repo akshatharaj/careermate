@@ -26,4 +26,11 @@ of working for the employer</li>"""
 
 REPORT_POST_SUGGESTION = """ Please submit your response. The administrators will review it. 
 Please note that the post will remain online until the administrators review your report and 
-make a decision on it. You will receive an email when a decision is made."""
+make a decision. You will receive an email when a decision is made."""
+
+POST_RESPONSE_SUGGESTION = """<b>Helpful Tips</b> 
+<ul>
+<li>Please be specific and brief</li>
+<li>If you are submitting a piece of code in your response, it helps to paste the code on http://pastebin.com/
+and link to it from here.</li>
+<li>Please be courteous to other members</li>"""

@@ -1,14 +1,15 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from django.shortcuts import redirect
 from django import forms as django_forms
 from django.db.models import Q
 
-from forms import PostForm, PostReportForm, PostSearchForm
-from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION
-from models import Post
+from forms import PostForm, PostReportForm, PostSearchForm, PostResponseForm
+from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION, POST_RESPONSE_SUGGESTION
+from models import Post, PostResponse
 
 def home(request):
     return render_to_response('home.html', context_instance=RequestContext(request))
@@ -41,28 +42,28 @@ def login_user(request):
 
 
 def add_new_post(request):
+    author = User.objects.get(pk=request.user.id)
     if request.method == 'GET':
         form = PostForm()
         form.fields['author'].widget = django_forms.HiddenInput()
+        form.fields['author'].initial = author
         form.fields['is_live'].widget = django_forms.HiddenInput()
+        form.fields['is_live'].initial = 'on'
         return render_to_response('admin/cmapp/post/change_form.html', 
                            {'form': form, 'suggest_text': POST_ADD_SUGGESTION},
                            RequestContext(request))
 
     if request.POST:
-        post_data = request.POST.copy()
-        post_data['author'] = request.user.id
-        post_data['is_live'] = True
-        form = PostForm(post_data)
-        form.fields['author'].widget = django_forms.HiddenInput()
-        form.fields['is_live'].widget = django_forms.HiddenInput()
-        context = {'suggest_text': POST_ADD_SUGGESTION}
-        context.update(csrf(request))
-        if not form.is_valid():
-            context['form'] = form
-            return render_to_response('admin/cmapp/post/change_form.html', context,
-                                       RequestContext(request))
-        post = form.save()
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form.fields['is_live'].widget = django_forms.HiddenInput()
+            form.fields['author'].widget = django_forms.HiddenInput()
+            return render_to_response('admin/cmapp/post/change_form.html',
+                                      {'errors': form.errors, 'form': form,
+                                       'suggest_text': POST_ADD_SUGGESTION},
+                                      RequestContext(request))
         return redirect('home')
 
 
@@ -82,18 +83,56 @@ def list_posts(request):
 def report_post(request, **kwargs):
     post_id = kwargs.get('post_id')
     post = Post.objects.get(pk=post_id)
+    author = User.objects.get(pk=request.user.id)
     if request.method == 'GET':
         form = PostReportForm()
         form.fields['author'].widget = django_forms.HiddenInput()
+        form.fields['author'].initial = author
         form.fields['post'].widget = django_forms.HiddenInput()
-        return render_to_response('admin/cmapp/reportpost/change_form.html',
+        form.fields['post'].initial = post
+        return render_to_response('admin/cmapp/postreport/change_form.html',
                            {'form': form, 'suggest_text': REPORT_POST_SUGGESTION,
                             'post': post},
                            RequestContext(request))
 
     if request.method == 'POST':
-        post_data = request.POST.copy()
-        post_data['author'] = request.user.id
-        post_data['post'] = post.id
-        post = form.save()
+        form = PostReportForm()
+        if form.is_valid():
+            form.save()
+        else:
+            form.fields['post'].widget = django_forms.HiddenInput()
+            form.fields['author'].widget = django_forms.HiddenInput()
+            return render_to_response('admin/cmapp/postreport/change_form.html',
+                                      {'errors': form.errors, 'form': form,
+                                       'suggest_text': REPORT_POST_SUGGESTION},
+                                      RequestContext(request))
+        return redirect('home')
+
+def respond_to_post(request, **kwargs):
+    post_id = kwargs.get('post_id', request.REQUEST.get('post'))
+    post = Post.objects.get(pk=post_id)
+    author = User.objects.get(pk=request.user.id)
+    if request.method == 'GET':
+        form = PostResponseForm()
+        form.fields['author'].widget = django_forms.HiddenInput()
+        form.fields['author'].initial = author
+        form.fields['post'].widget = django_forms.HiddenInput()
+        form.fields['post'].initial = post
+        form.fields['email_follow_up'].label = 'Email me when other users comment on this post'
+        return render_to_response('admin/cmapp/postresponse/change_form.html',
+                           {'form': form, 'suggest_text': POST_RESPONSE_SUGGESTION,
+                            'post': post},
+                           RequestContext(request))
+
+    if request.method == 'POST':
+        form = PostResponseForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form.fields['post'].widget = django_forms.HiddenInput()
+            form.fields['author'].widget = django_forms.HiddenInput()
+            return render_to_response('admin/cmapp/postresponse/change_form.html',
+                                      {'errors': form.errors, 'form': form, 
+                                       'suggest_text': POST_RESPONSE_SUGGESTION},        
+                                      RequestContext(request))
         return redirect('home')

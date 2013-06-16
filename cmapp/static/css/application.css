@@ -67,6 +67,13 @@ footer p {
   color: #D8F9FF;
 }
 
+.errornote{
+  font-size: 14px;
+  margin-bottom: 0px;
+  margin-left: 30px;
+  color: red;
+}
+
 label{
   width: 160px;
   float: left;
@@ -126,9 +133,17 @@ input[type=password]{
   margin-left: 150px;
 }
 
+.concise_post_title{
+  margin-left: 65px;
+}
+
 #post_listing{
   padding: 25px 100px 20px 15px;
   color: #104F72;
+}
+
+#post_listing a{
+  margin-right: 15px;
 }
 
 #post_listing h1{
@@ -157,7 +172,22 @@ input[type=password]{
   float: right;
   width: 300px;
   margin-right: 45px;
-  margin-top: 50px;
+  margin-top: 170px;
+  padding: 15px 15px 15px 15px;
+  text-align: justify;
+  background-color: #B7EAFF;
+  font-family: Century;
+  font-size: 12px;
+  padding-left: 15px;
+}
+
+.response_suggest_text{
+  border: 1px;
+  border-radius: 25px;
+  float: right;
+  width: 300px;
+  margin-right: 45px;
+  margin-top: 175px;
   padding: 15px 15px 15px 15px;
   text-align: justify;
   background-color: #B7EAFF;

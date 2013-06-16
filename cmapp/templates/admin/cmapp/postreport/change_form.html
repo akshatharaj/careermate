@@ -1,0 +1,41 @@
+{% extends "home.html" %}
+{% load i18n admin_static admin_modify %}
+{% load admin_urls %}
+{% block content %}<div id="content-main">
+
+{% autoescape off %}
+<div class="report_suggest_text">
+{% if suggest_text %}
+{{ suggest_text }}
+{% endif %}
+</div>
+{% endautoescape %}
+
+  <div id="post_listing" class="concise_post_title">
+    <h1> {{ post.job_title }} at {{ post.company }} </h1>
+    <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
+  </div>
+
+<form action="add" method="post">{% csrf_token %}
+<div>
+{% if errors %}
+    <p class="errornote">
+     Please correct the errors below.
+    </p>
+    {{ form.non_field_errors }}
+{% endif %}
+
+<div class="form_content">
+{{ form.as_p }}
+<input type="submit" value="Report" />
+</div>
+{% if adminform.first_field and add %}
+   <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>
+{% endif %}
+
+</div>
+</form>
+
+{% endblock %}
+
+

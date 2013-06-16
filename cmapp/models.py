@@ -29,3 +29,4 @@ class PostResponse(models.Model):
     post = models.ForeignKey(Post)
     created = models.DateTimeField(auto_now=True)
     comments = models.TextField()
+    email_follow_up = models.BooleanField(default=False)
