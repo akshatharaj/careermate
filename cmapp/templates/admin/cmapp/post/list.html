@@ -40,7 +40,7 @@
 
 {% block content %}
   <div id="post_filter">
-  <h4>Filter results</h4> 
+ <form action="/post/" method="get">{% csrf_token %}
   {{ search_form.as_p }}
   <input type='submit' value='Filter'> </input>
   </div>

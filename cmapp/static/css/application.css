@@ -166,11 +166,8 @@ input[type=password]{
   padding-left: 15px;
 }
 
-#post_filter h4{
-  padding: 15px 0px 0px 15px;
-  color: #104F72;
-  font-weight: bold;
-  font-size: 18px;
+#post_filter{
+ margin-top: 25px;
 }
 
 #post_filter label{

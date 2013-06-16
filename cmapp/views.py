@@ -70,10 +70,11 @@ def list_posts(request):
     if request.method == 'GET':
         search_form = PostSearchForm()
         posts = Post.objects.filter(is_live=True)
-        if request.GET.get('q', None):
-            posts = posts.filter(Q(job_title__icontains=q) |
-                                 Q(city__icontains=q) |
-                                 Q(company__icontains=q))
+        search_text = request.GET.get('search_text', None)
+        if search_text:
+            posts = posts.filter(Q(job_title__icontains=search_text) |
+                                 Q(city__icontains=search_text) |
+                                 Q(company__icontains=search_text))
         posts = posts.order_by('created')
         return render_to_response('admin/cmapp/post/list.html', {'posts': posts,
                                    'search_form': search_form}, RequestContext(request))
