@@ -67,7 +67,7 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = 'https://maggeraj.s3.amazonaws.com/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'storages',
     'south',
+    'endless_pagination',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -163,7 +164,12 @@ LOGGING = {
 TEMPLATE_CONTEXT_PROCESSORS = (
       'django.contrib.messages.context_processors.messages',
       'django.contrib.auth.context_processors.auth',
+      'django.core.context_processors.request',
+      'django.core.context_processors.static',
+      'django.contrib.messages.context_processors.messages',
 )
+
+ENDLESS_PAGINATION_PER_PAGE = 1
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
@@ -172,8 +178,8 @@ AWS_SECRET_ACCESS_KEY = 'QR7SEpnipb/8YcU/II5Q/E6EjE++6h+mAYFrGfrv'
 AWS_STORAGE_BUCKET_NAME = 'maggeraj'
 
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+#import dj_database_url
+#DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

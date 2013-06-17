@@ -11,7 +11,7 @@
 </div>
 {% endautoescape %}
 
-  <div id="post_listing" class="concise_post_title">
+  <div class="concise_post_title">
     <h1> {{ post.job_title }} at {{ post.company }} </h1>
     <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
   </div>
@@ -26,7 +26,7 @@
     {{ form.non_field_errors }}
 {% endif %}
 
-<div class="form_content">
+<div class="response_form_content">
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </div>

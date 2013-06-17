@@ -134,7 +134,21 @@ input[type=password]{
 }
 
 .concise_post_title{
-  margin-left: 65px;
+  margin-left: 35px;
+  padding: 25px 100px 0px 0px;
+}
+
+.concise_post_title h1{
+  padding: 20px 0px 0px 0px;
+  font-size: 20px;
+  line-height: 2px;
+}
+
+.concise_post_title h4{
+  padding-bottom: 5px;
+  font-size: 13px;
+  font-weight: 100;
+  line-height: 2px;
 }
 
 #post_listing{
@@ -142,14 +156,46 @@ input[type=password]{
   color: #104F72;
 }
 
-#post_listing a{
-  margin-right: 15px;
+#post_listing hr{
+  margin-top: 20px;
 }
 
 #post_listing h1{
-  padding: 20px 0px 2px 0px;
+  padding: 20px 0px 0px 0px;
   font-size: 20px;
   line-height: 2px;
+}
+
+#post_listing a{
+  padding: 0px 0px 0px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 2px;
+}
+
+#post_listing h2{
+  padding: 15px 0px 5px 30px;
+  font-size: 17px;
+  line-height: 2px;
+}
+
+#post_responses{
+  border: 1px;
+  background-color: #BAEBF9;
+  border-radius: 25px; 
+  margin-left: 25px;
+  padding: 10px 70px 20px 30px;
+}
+
+#post_responses hr{
+  border-color: #4697C2; 
+  width: 730px;
+}
+
+.post_location{
+  color: #104F72;
+  font-size: 20px;
+  line-height: 10px;    
 }
 
 #post_listing h4{
@@ -172,13 +218,14 @@ input[type=password]{
   float: right;
   width: 300px;
   margin-right: 45px;
-  margin-top: 170px;
+  margin-top: 140px;
   padding: 15px 15px 15px 15px;
   text-align: justify;
   background-color: #B7EAFF;
   font-family: Century;
-  font-size: 12px;
+  font-size: 13px;
   padding-left: 15px;
+  line-height: 18px;
 }
 
 .response_suggest_text{
@@ -187,7 +234,7 @@ input[type=password]{
   float: right;
   width: 300px;
   margin-right: 45px;
-  margin-top: 175px;
+  margin-top: 140px;
   padding: 15px 15px 15px 15px;
   text-align: justify;
   background-color: #B7EAFF;
@@ -215,12 +262,62 @@ input[type=password]{
 
 #post_filter select{
   width: 150px;
-  font-size: 22px;
+  font-size: 14px;
   margin-left: 15px;
   float: left;
 }
 
 #post_filter input[type=submit]{
   margin-left: 10px;
-  font-size: 2em;
+  font-size: 16px;
+}
+
+.endless_page_link{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 0px 15px 15px;
+}
+
+.endless_page_current{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 0px 15px 15px;
+}
+
+.form_content input[type=submit]
+{
+  margin-top: 35px;
+  margin-left: 250px;
+}
+
+.report_form_content{
+  padding: 20px 0px 25px 35px;
+}
+
+.report_form_content input[type=submit]
+{
+  margin-top: 35px;
+  margin-left: 250px;
+}
+
+.response_form_content{
+  padding: 20px 0px 25px 35px;
+}
+
+.response_form_content input[type=submit]
+{
+  margin-top: 35px;
+  margin-left: 260px;
+}
+
+.response_form_content input[type=checkbox]
+{ 
+  margin-top: 30px;
+}
+
+#user_message{
+  padding: 35px 0px 0px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #68AA12;
 }

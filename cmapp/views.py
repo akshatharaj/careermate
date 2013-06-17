@@ -2,7 +2,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.context_processors import csrf
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django import forms as django_forms
 from django.db.models import Q
@@ -49,7 +51,7 @@ def add_new_post(request):
         form.fields['author'].initial = author
         form.fields['is_live'].widget = django_forms.HiddenInput()
         form.fields['is_live'].initial = 'on'
-        return render_to_response('admin/cmapp/post/change_form.html', 
+        return render_to_response('cmapp/post/change_form.html', 
                            {'form': form, 'suggest_text': POST_ADD_SUGGESTION},
                            RequestContext(request))
 
@@ -60,7 +62,7 @@ def add_new_post(request):
         else:
             form.fields['is_live'].widget = django_forms.HiddenInput()
             form.fields['author'].widget = django_forms.HiddenInput()
-            return render_to_response('admin/cmapp/post/change_form.html',
+            return render_to_response('cmapp/post/change_form.html',
                                       {'errors': form.errors, 'form': form,
                                        'suggest_text': POST_ADD_SUGGESTION},
                                       RequestContext(request))
@@ -77,11 +79,11 @@ def list_posts(request):
                                  Q(city__icontains=search_text) |
                                  Q(company__icontains=search_text))
         posts = posts.order_by('created')
-        return render_to_response('admin/cmapp/post/list.html', {'posts': posts,
+        return render_to_response('cmapp/post/list.html', {'posts': posts,
                                    'search_form': search_form}, RequestContext(request))
 
 def report_post(request, **kwargs):
-    post_id = kwargs.get('post_id')
+    post_id = kwargs.get('post_id', request.REQUEST.get('post'))
     post = Post.objects.get(pk=post_id)
     author = User.objects.get(pk=request.user.id)
     if request.method == 'GET':
@@ -90,23 +92,27 @@ def report_post(request, **kwargs):
         form.fields['author'].initial = author
         form.fields['post'].widget = django_forms.HiddenInput()
         form.fields['post'].initial = post
-        return render_to_response('admin/cmapp/postreport/change_form.html',
+        return render_to_response('cmapp/postreport/change_form.html',
                            {'form': form, 'suggest_text': REPORT_POST_SUGGESTION,
                             'post': post},
                            RequestContext(request))
 
     if request.method == 'POST':
-        form = PostReportForm()
+        post = None
+        form = PostReportForm(request.POST)
         if form.is_valid():
+            post = form.cleaned_data.get('post')
             form.save()
+            messages.add_message(request, messages.INFO, 'Your report has been accepted.')
         else:
             form.fields['post'].widget = django_forms.HiddenInput()
             form.fields['author'].widget = django_forms.HiddenInput()
-            return render_to_response('admin/cmapp/postreport/change_form.html',
+            return render_to_response('cmapp/postreport/change_form.html',
                                       {'errors': form.errors, 'form': form,
+                                       'post': form.cleaned_data.get('post'), 
                                        'suggest_text': REPORT_POST_SUGGESTION},
                                       RequestContext(request))
-        return redirect('home')
+        return redirect(reverse('post-detail', kwargs={'post_id': post.id}))
 
 def respond_to_post(request, **kwargs):
     post_id = kwargs.get('post_id', request.REQUEST.get('post'))
@@ -119,20 +125,34 @@ def respond_to_post(request, **kwargs):
         form.fields['post'].widget = django_forms.HiddenInput()
         form.fields['post'].initial = post
         form.fields['email_follow_up'].label = 'Email me when other users comment on this post'
-        return render_to_response('admin/cmapp/postresponse/change_form.html',
+        return render_to_response('cmapp/postresponse/change_form.html',
                            {'form': form, 'suggest_text': POST_RESPONSE_SUGGESTION,
                             'post': post},
                            RequestContext(request))
 
     if request.method == 'POST':
+        post = None
         form = PostResponseForm(request.POST)
         if form.is_valid():
+            post = form.cleaned_data.get('post')
             form.save()
+            messages.add_message(request, messages.INFO, 'Response submission successful!')
         else:
             form.fields['post'].widget = django_forms.HiddenInput()
             form.fields['author'].widget = django_forms.HiddenInput()
-            return render_to_response('admin/cmapp/postresponse/change_form.html',
+            form.fields['email_follow_up'].label = 'Email me when other users comment on this post'
+            return render_to_response('cmapp/postresponse/change_form.html',
                                       {'errors': form.errors, 'form': form, 
-                                       'suggest_text': POST_RESPONSE_SUGGESTION},        
+                                       'suggest_text': POST_RESPONSE_SUGGESTION,
+                                       'post': form.cleaned_data.get('post')},        
                                       RequestContext(request))
-        return redirect('home')
+        return redirect(reverse('post-detail', kwargs={'post_id': post.id}))
+
+def post_detail(request, **kwargs):
+    post_id = kwargs.get('post_id', request.REQUEST.get('post'))
+    post = Post.objects.get(pk=post_id)
+    responses = post.postresponse_set.all().order_by('-created')
+    if request.method == 'GET':
+        return render_to_response('cmapp/post/detail.html',
+                           {'post': post, 'post_responses': responses},
+                           RequestContext(request))

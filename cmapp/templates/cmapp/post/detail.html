@@ -1,6 +1,7 @@
 {% extends "home.html" %}
 {% load i18n admin_static admin_list %}
 {% load admin_urls %}
+{% load endless %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -39,24 +40,33 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-  <div id="post_filter">
- <form action="/post/" method="get">{% csrf_token %}
-  {{ search_form.as_p }}
-  <input type='submit' value='Filter'> </input>
-  </div>
 
   <div id="post_listing">
-    {% for post in posts %}
-    <h1> {{ post.job_title }} at {{ post.company }} </h1>
-    <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
-    <b> Comments: </b> <br/>
-    <p> {{ post.comments|linebreaks }} </p>
-    <p> {{ post.overall_experience }} experience </p>
-    <a href="{% url 'report-post' post_id=post.id %}"> Report this Review </a>
-    <a href="{% url 'respond-to-post' post_id=post.id %}"> Submit a response </a>
-    <hr/>
-    {% endfor %}
-
+      <h1> {{ post.job_title }} at {{ post.company }} </h1>
+      <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
+      <b> Comments </b> <br/>
+      <p> {{ post.comments|linebreaks }} </p>
+      <p> {{ post.overall_experience }} experience </p>
+      <a href="{% url 'report-post' post_id=post.id %}"> Report this! </a>
+      <a href="{% url 'respond-to-post' post_id=post.id %}"> Submit response </a>
+      <br />
+   <div id="user_message">
+     {% if messages %}
+     {% for message in messages %}
+        {{ message }}
+     {% endfor %}
+     {% endif %}
+   </div>
+   <h2> User Responses </h2>
+   <div id="post_responses">
+   {% paginate post_responses %}
+   {% for post_response in post_responses %}
+       <h4> submitted on {{ post_response.created }} </h4>
+       {{ post_response.comments }}
+       <hr />
+   {% endfor %}
+   {% show_pages %}
+   </div>
   </div>
 {% endblock %}
 

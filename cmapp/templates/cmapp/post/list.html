@@ -1,0 +1,61 @@
+{% extends "home.html" %}
+{% load i18n admin_static admin_list %}
+{% load admin_urls %}
+{% load endless %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+  {% if cl.formset %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+  {% endif %}
+  {% if cl.formset or action_form %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  {{ media.css }}
+  {% if not actions_on_top and not actions_on_bottom %}
+    <style>
+      #changelist table thead th:first-child {width: inherit}
+    </style>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% if action_form %}{% if actions_on_top or actions_on_bottom %}
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function($) {
+        $("tr input.action-select").actions();
+    });
+})(django.jQuery);
+</script>
+{% endif %}{% endif %}
+{% endblock %}
+
+{% block bodyclass %}change-list{% endblock %}
+
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+  <div id="post_filter">
+    <form action="/post/" method="get">{% csrf_token %}
+    {{ search_form.as_p }}
+    <input type='submit' value='Filter'> </input>
+  </div>
+
+  <div id="post_listing">
+   {% paginate posts %}
+   {% for post in posts %}
+      <h1> {{ post.job_title }} at {{ post.company }} </h1>
+      <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
+     <p class="post_location">{{ post.city }}, {{ post.state }}</p> 
+      <a href="{% url 'post-detail' post_id=post.id %}"> <img src="{{ STATIC_URL }}/img/read_more.png" /></a>
+      <hr/>
+   {% endfor %}
+   {% show_pages %}
+  </div>
+{% endblock %}
+
