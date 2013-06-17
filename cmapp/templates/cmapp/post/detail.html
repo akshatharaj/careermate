@@ -41,14 +41,19 @@
 
 {% block content %}
 
+  {% if not post.is_live %}
+  <div id="offline_content_warning">
+   <h4> Please note! This review has received too many negative reports by users </h4>
+  </div>
+  {% endif %}
   <div id="post_listing">
       <h1> {{ post.job_title }} at {{ post.company }} </h1>
       <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
       <b> Comments </b> <br/>
       <p> {{ post.comments|linebreaks }} </p>
       <p> {{ post.overall_experience }} experience </p>
-      <a href="{% url 'report-post' post_id=post.id %}"> Report this! </a>
-      <a href="{% url 'respond-to-post' post_id=post.id %}"> Submit response </a>
+      <a href="{% url 'respond-to-post' post_id=post.id %}"><img src="{{ STATIC_URL }}img/post_reply.png"></img></a>
+      <a href="{% url 'report-post' post_id=post.id %}"><img src="{{ STATIC_URL }}img/report.png"></img></a>
       <br />
    <div id="user_message">
      {% if messages %}

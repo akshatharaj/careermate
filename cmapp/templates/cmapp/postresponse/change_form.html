@@ -10,7 +10,7 @@
 {% endif %}
 </div>
 {% endautoescape %}
-
+<div id="back_button"> <img src="{{ STATIC_URL }}img/back.png" onClick="javascript:history.go(-1);"></img> </div>
   <div class="concise_post_title">
     <h1> {{ post.job_title }} at {{ post.company }} </h1>
     <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
@@ -28,7 +28,7 @@
 
 <div class="response_form_content">
 {{ form.as_p }}
-<input type="submit" value="Submit" />
+<input type="submit" value="Submit"></input>
 </div>
 {% if adminform.first_field and add %}
    <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>

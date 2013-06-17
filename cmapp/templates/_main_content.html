@@ -1,16 +1,16 @@
 <div class="home_page_text">
-  <h3> Hello 
+  <h2> Hello 
     {% if user.is_authenticated %}
         {{ user }}
     {% else %}
-        {{ '!' }}
+        {{ 'Guest!' }}
     {% endif %}
-  </h3>
+  </h2>
   <h3>
     Welcome to Careermate! A website where you can view reviews about job interviews, offers and employers.
   </h3>
   <p>
-    Please clicks on the View listings link on the navigation at the top to view all review submitted by other users.
+    Please click on the View listings link on the navigation at the top to view all review submitted by other users.
     You can filter reviews based on city, state, company or job title you are interested in. You can submit a review too.
   </p>
   <p>
