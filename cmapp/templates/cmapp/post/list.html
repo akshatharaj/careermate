@@ -52,7 +52,7 @@
       <h1> {{ post.job_title }} at {{ post.company }} </h1>
       <h4> {{ post.review_type }} review submitted on {{ post.created }} </h4>
      <p class="post_location">{{ post.city }}, {{ post.state }}</p> 
-      <a href="{% url 'post-detail' post_id=post.id %}"> <img src="{{ STATIC_URL }}/img/read_more.png" /></a>
+      <a href="{% url 'post-detail' post_id=post.id %}"> <img src="{{ STATIC_URL }}img/read_more.png" /></a>
       <hr/>
    {% endfor %}
    {% show_pages %}
