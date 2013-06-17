@@ -12,6 +12,7 @@ from django.db.models import Q
 from forms import PostForm, PostReportForm, PostSearchForm, PostResponseForm
 from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION, POST_RESPONSE_SUGGESTION
 from models import Post, PostResponse
+from utils import notify_all_response_listeners
 
 def home(request):
     return render_to_response('home.html', context_instance=RequestContext(request))
@@ -135,7 +136,8 @@ def respond_to_post(request, **kwargs):
         form = PostResponseForm(request.POST)
         if form.is_valid():
             post = form.cleaned_data.get('post')
-            form.save()
+            response = form.save()
+            notify_all_response_listeners(response)
             messages.add_message(request, messages.INFO, 'Response submission successful!')
         else:
             form.fields['post'].widget = django_forms.HiddenInput()
