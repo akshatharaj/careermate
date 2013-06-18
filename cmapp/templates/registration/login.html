@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+{% block content %}
+<div id="content-main">
+  <div id="auth_form">
+     {% if error %}
+         <p class="errornote"> {{ error }} </p>
+     {% endif %}
+     <p>
+        {{ state }}
+     </p>
+	<form action='/login/' method="post">{% csrf_token %}
+                {% csrf_token %}
+		{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+		<label> username: </label>
+		<input type="text" name="username" value="{{ username }}" /><br />
+
+		<label> password: </label>
+		<input type="password" name="password" value="" /><br />
+
+		<input type="submit" value="Log in" />
+	</form>
+  </div>
+</div>
+{% endblock %}

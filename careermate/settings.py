@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = '/login/'
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -122,11 +124,11 @@ INSTALLED_APPS = (
     #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cmapp',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'cmapp',
     'storages',
     'south',
     'endless_pagination',
@@ -185,6 +187,7 @@ DATABASES['default'] =  dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SERVER_EMAIL = 'admin@careermate.com'
+
 
 import os
 EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']

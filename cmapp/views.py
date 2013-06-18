@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django import forms as django_forms
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from forms import PostForm, PostReportForm, PostSearchForm, PostResponseForm
 from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION, POST_RESPONSE_SUGGESTION
@@ -21,7 +22,7 @@ def home(request):
 def login_user(request):
     state = "Please log in below..."
     username = password = ''
-    context = {'state': state}
+    context = {'state': state, 'next': request.REQUEST.get('next', None)}
     context.update(csrf(request))
 
     if request.POST:
@@ -35,15 +36,15 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 context['state'] = "You're successfully logged in!"
-                return redirect('home')                
+                return redirect(request.REQUEST.get('next', None) or 'home') 
             else:
-                state = "Your account is not active, please contact the site admin."
+                context['error'] = "Your account is not active, please contact the site admin."
         else:
-            state = "Your username and/or password were incorrect."
+            context['error'] = "Your username and/or password were incorrect."
 
-    return render_to_response('auth.html', context)
+    return render_to_response('registration/login.html', context, RequestContext(request))
 
-
+@login_required
 def add_new_post(request):
     author = User.objects.get(pk=request.user.id)
     if request.method == 'GET':
@@ -83,6 +84,7 @@ def list_posts(request):
         return render_to_response('cmapp/post/list.html', {'posts': posts,
                                    'search_form': search_form}, RequestContext(request))
 
+@login_required
 def report_post(request, **kwargs):
     post_id = kwargs.get('post_id', request.REQUEST.get('post'))
     post = Post.objects.get(pk=post_id)
@@ -115,6 +117,7 @@ def report_post(request, **kwargs):
                                       RequestContext(request))
         return redirect(reverse('post-detail', kwargs={'post_id': post.id}))
 
+@login_required
 def respond_to_post(request, **kwargs):
     post_id = kwargs.get('post_id', request.REQUEST.get('post'))
     post = Post.objects.get(pk=post_id)
