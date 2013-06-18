@@ -10,7 +10,7 @@ from django import forms as django_forms
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-from forms import PostForm, PostReportForm, PostSearchForm, PostResponseForm
+from forms import PostForm, PostReportForm, PostSearchForm, PostResponseForm, UserForm
 from constants import POST_ADD_SUGGESTION, REPORT_POST_SUGGESTION, POST_RESPONSE_SUGGESTION
 from models import Post, PostResponse
 from utils import notify_all_response_listeners
@@ -18,6 +18,23 @@ from utils import notify_all_response_listeners
 def home(request):
     return render_to_response('home.html', context_instance=RequestContext(request))
 
+
+def register(request):
+    context = {'form': UserForm(), 'state': 'Please enter information to register'}
+    context.update(csrf(request))
+    if request.POST:
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.set_password(form.cleaned_data.get('password'))
+            user.save()
+            messages.add_message(request, messages.INFO, 'Registration successful! Please Log in.')
+            return render_to_response('registration/login.html', RequestContext(request))
+        else:
+            return render_to_response('registration/register.html',
+                                      {'errors': form.errors, 'form': form}, 
+                                      RequestContext(request))          
+    return render_to_response('registration/register.html', context, RequestContext(request))    
 
 def login_user(request):
     state = "Please log in below..."

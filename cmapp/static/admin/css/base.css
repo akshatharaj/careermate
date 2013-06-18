@@ -1,4 +1,4 @@
-i/*
+/*
     DJANGO Admin styles
 */
 
@@ -817,7 +817,7 @@ table#change-history tbody th {
     top: 0;
     right: 0;
     padding: 1.2em 20px;
-    font-size: 14px;
+    font-size: 16px;
     text-align: right;
 }
 

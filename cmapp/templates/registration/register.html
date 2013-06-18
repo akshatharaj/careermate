@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+{% block content %}
+<div id="content-main">
+  <div id="auth_form">
+  {% if errors %}
+    <p class="errornote">
+     Please correct the errors below.
+    </p>
+    {{ form.non_field_errors }}
+  {% endif %}
+     <p>
+        {{ state }}
+     </p>
+        <form action='/register/' method="post">{% csrf_token %}
+                {% csrf_token %}
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                {{ form.as_p }}
+                <input type="submit" value="Register" />
+        </form>
+  </div>
+</div>
+{% endblock %}

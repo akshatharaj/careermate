@@ -2,6 +2,11 @@
 {% block content %}
 <div id="content-main">
   <div id="auth_form">
+     {% if messages %}
+     {% for message in messages %}
+        {{ message }}
+     {% endfor %}
+     {% endif %}
      {% if error %}
          <p class="errornote"> {{ error }} </p>
      {% endif %}
@@ -21,6 +26,7 @@
 
 		<input type="submit" value="Log in" />
 	</form>
+  <p> New user? Please proceed to the <a href="{% url 'register' %}"> registration </a> </p> 
   </div>
 </div>
 {% endblock %}

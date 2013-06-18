@@ -4,14 +4,15 @@ from django.core.urlresolvers import reverse
 from django.contrib import admin
 from django.contrib.auth.views import logout
 
-from views import (home, login_user, add_new_post, list_posts, report_post, 
-respond_to_post, post_detail)
+from views import (home, login_user, register, add_new_post, list_posts, 
+report_post, respond_to_post, post_detail)
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^register/$', register, name='register'),
     url(r'^login/$', login_user, name='login'),
     url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
     url(r'^new-post/$', add_new_post, name='new_post'),
