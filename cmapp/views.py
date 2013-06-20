@@ -97,7 +97,7 @@ def list_posts(request):
             posts = posts.filter(Q(job_title__icontains=search_text) |
                                  Q(city__icontains=search_text) |
                                  Q(company__icontains=search_text))
-        posts = posts.order_by('created')
+        posts = posts.order_by('-created')
         return render_to_response('cmapp/post/list.html', {'posts': posts,
                                    'search_form': search_form}, RequestContext(request))
 
