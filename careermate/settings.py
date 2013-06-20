@@ -171,7 +171,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
       'django.contrib.messages.context_processors.messages',
 )
 
-ENDLESS_PAGINATION_PER_PAGE = 1
+ENDLESS_PAGINATION_PER_PAGE = 10
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
