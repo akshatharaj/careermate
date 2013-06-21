@@ -1,6 +1,6 @@
 # Django settings for careermate project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
