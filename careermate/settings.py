@@ -86,9 +86,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '1bcj49gxfmg$$mzbknag$jd#h4*tbp^p7tji_8xa(#vhrlq!mw'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -175,9 +172,6 @@ ENDLESS_PAGINATION_PER_PAGE = 10
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-AWS_ACCESS_KEY_ID = 'AKIAIJDUTOXXAX2HWNBA'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'maggeraj'
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
